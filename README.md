@@ -103,6 +103,6 @@ If you would like to use your own email template to send the report you can set 
 
 **Example files**
 
-Examples can be found here: https://github.com/KuriousAgency/craft-bigreports/examples
+Examples can be found here: https://github.com/KuriousAgency/craft-bigreports/tree/master/examples
 
 Brought to you by [Kurious Agency](https://kurious.agency)
