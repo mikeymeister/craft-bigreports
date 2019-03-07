@@ -1,0 +1,45 @@
+{
+	"name": "kuriousagency/bigreports",
+	"description": "Run reports on large data sets.",
+	"type": "craft-plugin",
+	"version": "1.0.0",
+	"keywords": [
+		"craft",
+		"cms",
+		"craftcms",
+		"craft-plugin",
+		"big reports"
+	],
+	"support": {
+		"docs": "https://github.com/KuriousAgency/craft-bigreports/blob/master/README.md",
+		"issues": "https://github.com/KuriousAgency/craft-bigreports/issues"
+	},
+	"license": "proprietary",
+	"authors": [
+		{
+			"name": "Kurious Agency",
+			"homepage": "https://kurious.agency"
+		}
+	],
+	"require": {
+		"craftcms/cms": "^3.0.0",
+		"league/csv": "^8.2",
+		"vova07/yii2-console-runner-extension": "^0.1.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"kuriousagency\\bigreports\\": "src/"
+		}
+	},
+	"extra": {
+		"name": "Big Reports",
+		"handle": "bigreports",
+		"hasCpSettings": true,
+		"hasCpSection": true,
+		"changelogUrl": "https://raw.githubusercontent.com/KuriousAgency/craft-bigreports/master/CHANGELOG.md",
+		"components": {
+			"service": "kuriousagency\\bigreports\\services\\BigReportsService"
+		},
+		"class": "kuriousagency\\bigreports\\BigReports"
+	}
+}

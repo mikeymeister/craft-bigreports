@@ -1,0 +1,15 @@
+{% set users = craft.users.
+	dateCreated(['and','>= ' ~ options.startDate|date('c'),'<= '~ options.endDate|date('Y-m-d 23:59:59')|date('c')])
+	.all() %}
+
+{% do craft.bigreports.service.columns(["Firstname","LastName","Email"]) %}
+
+{% for user in users %}
+	{% do craft.bigreports.service.row([
+        user.firstName, 
+        user.lastName, 
+        user.email,
+    ]) %}
+{% endfor %}
+
+{{ craft.bigreports.service.data }}

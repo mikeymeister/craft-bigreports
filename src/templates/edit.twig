@@ -1,0 +1,70 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Big Reports plugin for Craft CMS 3.x
+ *
+ * Big Reports index.twig
+ *
+ * @author    Kurious Agency
+ * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://kurious.agency
+ * @package   BigReports
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% if report.id > 0 and not currentUser.can('bigreports-edit') %}
+	{% redirect 'reports' %}
+{% endif %}
+{% if report.id == null and not currentUser.can('bigreports-create') %}
+	{% redirect 'reports' %}
+{% endif %}
+
+{% set title = report.id ? "Edit report" : "Create "~report.type~" report" %}
+
+{% set crumbs = [
+    { label: "Big Reports"|t, url: url('bigreports') }
+] %}
+
+{% set fullPageForm = true %}
+
+{% block content %}
+
+	<input type="hidden" name="action" value="bigreports/default/save" />
+	<input type="hidden" name="type" value="{{ report.type }}" />
+
+	{% if report.id %}
+		<input type="hidden" name="id" value="{{ report.id }}"/>
+	{% endif %}
+
+	{{ forms.textField({
+		first: true,
+		label: "Name"|t,
+		instructions: "What this report will be called in the CP."|t,
+		id: 'name',
+		name: 'name',
+		value: report.name,
+		errors: report.getErrors('name'),
+		autofocus: true,
+		required: true
+	}) }}
+
+	{{ forms.textField({
+		label: "Email"|t,
+		instructions: "Please enter the email addresses to send the report to (can be a comma seperated list)"|t,
+		id: 'email',
+		name: 'email',
+		value: report.email ?? currentUser.email,
+		placeholder: 'jane@acme.com,joe@acme.com',
+		errors: report.getErrors('email'),
+	}) }}
+
+	<hr>
+
+	<h2>Options</h2>
+	{{ options|raw }}
+
+{% endblock %}

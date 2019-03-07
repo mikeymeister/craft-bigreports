@@ -1,0 +1,98 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Big Reports plugin for Craft CMS 3.x
+ *
+ * Big Reports index.twig
+ *
+ * @author    Kurious Agency
+ * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://kurious.agency
+ * @package   BigReports
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = "Big Reports" %}
+
+{% block actionButton %}
+    {% if currentUser.can('bigreports-create') %}
+		<div class="buttons right">
+			<div class="newwidget btngroup">
+				<div id="newwidgetmenubtn" class="btn submit menubtn add icon">{{ 'New report'|t }}</div>
+				<div class="menu newwidgetmenu">
+				
+					<ul>
+						{% for type in types %}
+							<li>
+								<a href="{{ url('bigreports/'~type~'/new') }}" data-type="{{ type }}" data-name="{{ type }}">
+									{{ type|capitalize }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<p id="noBigReports"{% if reports %} class="hidden"{% endif %}>
+			{{ "No reports exist yet."|t }}
+	</p>
+
+	{% if reports %}
+		<table id="bigReports" class="data fullwidth collapsible">
+			<thead>
+			<th scope="col">{{ "Name"|t }}</th>
+			<th scope="col">{{ "Type"|t }}</th>
+			<th scope="col">{{ "Email"|t }}</th>
+			<th scope="col">{{ "Exported"|t }}</th>
+			<td class="thin"></td>
+			{% if currentUser.can('bigreports-edit') %}
+				<td class="thin"></td>
+			{% endif %}
+			<td class="thin"></td>
+			</thead>
+			<tbody>
+			{% for report in reports %}
+				<tr data-id="{{ report.id }}" data-name="{{ report.name|t }}">
+					<th scope="row" data-title="{{ 'Name'|t }}">
+						{% if currentUser.can('bigreports-edit') %}
+							<a href="{{ url('bigreports/edit/' ~ report.id) }}">{{ report.name|t }}</a>
+						{% else %}
+							{{ report.name|t }}
+						{% endif %}
+					</th>
+					<td data-title="{{ 'Type'|t }}"><code>{{ report.type }}</code></td>
+					<td data-title="{{ 'Email'|t }}"><code>{{ report.email }}</code></td>
+					<td data-title="{{ 'Exported'|t }}">
+						{{ report.dateExported is not null ? report.dateExported|date('d/m/Y G:i') : '' }}
+					</td>
+					{% if currentUser.can('bigreports-edit') %}
+						<td class="thin"><a class="btn" title="{{ 'Edit'|t }}" href="{{ url('bigreports/edit/' ~ report.id) }}" data-icon="settings">Edit</a></td>
+					{% endif %}
+					<td class="thin">
+						{% if report.email|length %}
+							<a class="submit btn icon" title="{{ 'Export'|t }}" href="{{ url('bigreports/export/' ~ report.id) }}" data-icon="mail">Export</a>
+						{% endif %}
+					</td>
+					<td class="thin"><a class="delete icon" title="{{ 'Delete'|t }}" role="button"></a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endblock %}
+
+{% js %}
+	new Craft.AdminTable({
+		tableSelector: '#bigReports',
+		noObjectsSelector: '#noBigReports',
+		deleteAction: 'bigreports/default/delete'
+	});
+{% endjs %}
