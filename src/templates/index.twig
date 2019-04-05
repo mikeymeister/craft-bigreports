@@ -29,7 +29,7 @@
 						{% for type in types %}
 							<li>
 								<a href="{{ url('bigreports/'~type~'/new') }}" data-type="{{ type }}" data-name="{{ type }}">
-									{{ type|capitalize }}
+									{{ type|replace('_',' ')|title }}
 								</a>
 							</li>
 						{% endfor %}

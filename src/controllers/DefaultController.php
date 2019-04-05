@@ -89,7 +89,7 @@ class DefaultController extends Controller
 			$report = new ReportModel();
 		}
 
-		$options = $request->getParam('options');
+		$options = $request->getParam('options',[]);
 
 		foreach($options as $key => $option)
 		{
