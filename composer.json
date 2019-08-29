@@ -2,7 +2,7 @@
 	"name": "kuriousagency/bigreports",
 	"description": "Run reports on large data sets.",
 	"type": "craft-plugin",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"keywords": [
 		"craft",
 		"cms",
