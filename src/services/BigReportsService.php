@@ -233,7 +233,7 @@ class BigReportsService extends Component
 
 		$newEmail = new Message();
 		$newEmail->setTo($emailArray);
-		$newEmail->setFrom(Craft::$app->systemSettings->getEmailSettings()->fromEmail);
+		$newEmail->setFrom(Craft::parseEnv(Craft::$app->systemSettings->getEmailSettings()->fromEmail));
 		$newEmail->setSubject('Report');
 
 		if($templatePath && $view->doesTemplateExist($templatePath)) {
