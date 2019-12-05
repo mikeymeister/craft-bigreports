@@ -62,9 +62,11 @@ class DefaultController extends Controller
 		]);
 	}
 	
-	public function actionEdit($id)
+	public function actionEdit($id=null, $report=null)
 	{
-		$report = BigReports::$plugin->service->getReportById($id);
+		if (!$report) {
+			$report = BigReports::$plugin->service->getReportById($id);
+		}
 
 		if (!$report) {
 			throw new NotFoundHttpException('Report not found');
@@ -105,7 +107,17 @@ class DefaultController extends Controller
 		$report->options = $options;
 		$report->email = $request->getParam('email', $user->email);
 
-		BigReports::$plugin->service->saveReport($report);
+		if (!BigReports::$plugin->service->saveReport($report)) {
+			Craft::$app->getSession()->setError(Craft::t('app', 'Couldn’t save report.'));
+
+            // Send the entry back to the template
+            Craft::$app->getUrlManager()->setRouteParams([
+				'report' => $report,
+				'options' => BigReports::$plugin->service->getOptions($report)
+            ]);
+
+            return null;
+		}
 
 		$this->redirect("bigreports");
 	}

@@ -193,6 +193,7 @@ class BigReportsService extends Component
 		if ($view->doesTemplateExist($path."/options")) {
 			$options = $view->renderTemplate($path."/options", [
 				'options' => $report->parsedOptions,
+				'report' => $report,
 			]);
 
 			$view->setTemplateMode($oldTemplateMode);

@@ -45,7 +45,7 @@ class Report extends Model
 	
 	public function getParsedOptions()
 	{
-		$options = Json::decode($this->options);
+		$options = Json::decodeIfJson($this->options);
 
 		if($options) {	
 			foreach ($options as $key => $option)
@@ -59,13 +59,42 @@ class Report extends Model
 		return $options;
 	}
 
+	public function checkDates()
+	{
+		$options = Json::decodeIfJson($this->options);
+
+		if (isset($options['startDate'])) {
+			if ($options['startDate'] == '') {
+				$this->addError('options.startDate', 'Start date is required');
+			}
+		} else {
+			$this->addError('options.startDate', 'Start date is required');
+		}
+
+		if (isset($options['endDate'])) {
+			if ($options['endDate'] == '') {
+				$this->addError('options.endDate', 'End date is required');
+			}
+		} else {
+			$this->addError('options.endDate', 'End date is required');
+		}
+
+		if (isset($options['startDate']) && isset($options['endDate'])) {
+			if ($options['startDate'] > $options['endDate']) {
+				$this->addError('options.endDate', 'End date must be after the start date');
+			}
+		}
+
+	}
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name', 'email', 'type'], 'required']
+			[['name', 'email', 'type'], 'required'],
+			['options', 'checkDates'],
         ];
     }
 }
