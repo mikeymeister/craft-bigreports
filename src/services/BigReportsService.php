@@ -131,8 +131,10 @@ class BigReportsService extends Component
 			$csv->insertOne($data['columns']);
 		}
 
-		foreach ($data['rows'] as $row) {
-			$csv->insertOne($row);
+		if (isset($data['rows'])) {
+			foreach ($data['rows'] as $row) {
+				$csv->insertOne($row);
+			}
 		}
 
 		$this->emailReport($fileName, $report->email);
