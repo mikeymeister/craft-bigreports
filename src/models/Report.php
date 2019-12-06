@@ -50,7 +50,7 @@ class Report extends Model
 		if($options) {	
 			foreach ($options as $key => $option)
 			{
-				if (preg_match('/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/', $option)) {
+				if (is_string($option) && preg_match('/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/', $option)) {
 					$options[$key] = DateTimeHelper::toDateTime($option);
 				}	
 			}

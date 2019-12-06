@@ -3,12 +3,14 @@
 	id: 'startDate',
     label: "Start Date"|t,
     name: 'options[startDate]',
-	value: options.startDate is defined ? options.startDate : "",
+	value: options.startDate ?? "",
+	errors: report.getErrors('options.startDate')
 }) }}
 
 {{ craft.forms('dateField', {
 	id: 'endDate',
     label: "End Date"|t,
     name: 'options[endDate]',
-	value: options.endDate is defined ? options.endDate : "",
+	value: options.endDate ?? "",
+	errors: report.getErrors('options.endDate')
 }) }}
