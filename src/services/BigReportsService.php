@@ -169,14 +169,15 @@ class BigReportsService extends Component
 	{
 		$types = [];
 		$path = BigReports::$plugin->getSettings()->templatePath;
+		if (!$path) {
+			$path = '_reports';
+		}
 
-		if ($path) {
-			$path = Craft::$app->getPath()->getSiteTemplatesPath()."/".$path;
-			$folders = FileHelper::findDirectories(FileHelper::normalizePath($path));
+		$path = Craft::$app->getPath()->getSiteTemplatesPath()."/".$path;
+		$folders = FileHelper::findDirectories(FileHelper::normalizePath($path));
 
-			foreach($folders as $folder){
-				$types[] = pathinfo($folder, PATHINFO_BASENAME);
-			}
+		foreach($folders as $folder){
+			$types[] = pathinfo($folder, PATHINFO_BASENAME);
 		}
 
 		asort($types);
@@ -186,7 +187,12 @@ class BigReportsService extends Component
 
 	public function getOptions($report)
 	{
-		$path = BigReports::$plugin->getSettings()->templatePath."/".$report->type;
+		$templatePath = BigReports::$plugin->getSettings()->templatePath;
+		if (!$templatePath) {
+			$templatePath = '_reports';
+		}
+		
+		$path = $templatePath."/".$report->type;
 
 		$view = Craft::$app->getView();
 		$oldTemplateMode = $view->getTemplateMode();
@@ -209,7 +215,11 @@ class BigReportsService extends Component
 
 	public function getTemplate($report)
 	{
-		$path = BigReports::$plugin->getSettings()->templatePath."/".$report->type;
+		$templatePath = BigReports::$plugin->getSettings()->templatePath;
+		if (!$templatePath) {
+			$templatePath = '_reports';
+		}
+		$path = $templatePath."/".$report->type;
 
 		$view = Craft::$app->getView();
 		$oldTemplateMode = $view->getTemplateMode();
