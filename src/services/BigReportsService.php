@@ -168,13 +168,21 @@ class BigReportsService extends Component
 	public function getTypes()
 	{
 		$types = [];
-		$path = BigReports::$plugin->getSettings()->templatePath;
+		// $path = BigReports::$plugin->getSettings()->templatePath;
+		$path = false;
 		if (!$path) {
 			$path = '_reports';
 		}
 
 		$path = Craft::$app->getPath()->getSiteTemplatesPath()."/".$path;
-		$folders = FileHelper::findDirectories(FileHelper::normalizePath($path));
+
+		try {
+			$folders = FileHelper::findDirectories(FileHelper::normalizePath($path));
+		} catch (\Exception $e) {
+			Craft::warning('Big Reports folder not found','bigreports');
+			Craft::$app->session->setError($e->getMessage());
+			return false;
+		}
 
 		foreach($folders as $folder){
 			$types[] = pathinfo($folder, PATHINFO_BASENAME);

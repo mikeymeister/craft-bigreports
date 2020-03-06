@@ -18,6 +18,7 @@ use vova07\console\ConsoleRunner;
 use Craft;
 use craft\web\Controller;
 use craft\helpers\DateTimeHelper;
+use craft\helpers\UrlHelper;
 
 /**
  * @author    Kurious Agency
@@ -45,10 +46,16 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-		return $this->renderTemplate('bigreports/index', [
+		$variables = [
 			'types' => BigReports::$plugin->service->getTypes(),
 			'reports' => BigReports::$plugin->service->getAllReports(),
-		]);
+		];
+
+		if ($variables['types'] == false) {
+			return $this->redirect(UrlHelper::CpUrl('settings/plugins/bigreports'));
+		}
+
+		return $this->renderTemplate('bigreports/index',$variables);
     }
 
     public function actionNew($type)
