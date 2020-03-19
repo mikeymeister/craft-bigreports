@@ -102,7 +102,7 @@ class BigReportsService extends Component
 		return false;
 	}
 
-	public function exportCsv($id)
+	public function exportCsv($id, $startDate=null, $endDate=null, $email=null)
 	{
 		if (!$id) {
 			Craft::$app->end();
@@ -112,6 +112,19 @@ class BigReportsService extends Component
 		$report->dateExported = new \DateTime();
 
 		$this->saveReport($report);
+
+		//override options
+		$options = (object) Json::decodeIfJson($report->options);
+		if ($startDate) {
+			$options->startDate = DateTimeHelper::toIso8601(new \DateTime($startDate));
+		}
+		if ($endDate) {
+			$options->endDate = DateTimeHelper::toIso8601(new \DateTime($endDate));
+		}
+		$report->options = Json::encode($options);
+		if ($email) {
+			$report->email = $email;
+		}
 
 		$data = $this->parseReport($report);
 

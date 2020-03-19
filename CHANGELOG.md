@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.0 - 2020-03-19
+
+### Changed
+- allow startDate, endDate, email to be override via console when exporting a report.
+
 ## 1.0.7 - 2020-03-06
 
 ### Fixed

@@ -134,7 +134,7 @@ class DefaultController extends Controller
 		if ($id > 0) {
 			$path = Craft::getAlias("@root") . "/craft";
 			$console = new ConsoleRunner(['file' => $path]);
-			$console->run('bigreports/export ' . $id);
+			$console->run('bigreports/export --id' . $id);
 		}
 
 		//BigReports::$plugin->service->exportCsv($id);
