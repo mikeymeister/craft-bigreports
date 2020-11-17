@@ -4,16 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.2 - 2020-11-17
+
+### Changed
+
+-   startDate and endDate don't get validated if not part of options
+
 ## 1.1.1 - 2020-03-19
 
 ### Changed
-- allow startDate, endDate, email to be override via console when exporting a report.
+
+-   allow startDate, endDate, email to be override via console when exporting a report.
 
 ## 1.0.7 - 2020-03-06
 
 ### Fixed
 
-- Redirect to settings with error message if template location can't be found.
+-   Redirect to settings with error message if template location can't be found.
 
 ## 1.0.6 - 2020-01-27
 

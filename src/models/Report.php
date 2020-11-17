@@ -26,12 +26,12 @@ use craft\helpers\DateTimeHelper;
  */
 class Report extends Model
 {
-    // Public Properties
-    // =========================================================================
+	// Public Properties
+	// =========================================================================
 
-    /**
-     * @var string
-     */
+	/**
+	 * @var string
+	 */
 	public $id;
 	public $siteId;
 	public $name;
@@ -40,22 +40,27 @@ class Report extends Model
 	public $email;
 	public $dateExported;
 
-    // Public Methods
+	// Public Methods
 	// =========================================================================
-	
+
 	public function getParsedOptions()
 	{
 		$options = Json::decodeIfJson($this->options);
 
-		if($options) {	
-			foreach ($options as $key => $option)
-			{
-				if (is_string($option) && preg_match('/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/', $option)) {
+		if ($options) {
+			foreach ($options as $key => $option) {
+				if (
+					is_string($option) &&
+					preg_match(
+						'/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/',
+						$option
+					)
+				) {
 					$options[$key] = DateTimeHelper::toDateTime($option);
-				}	
+				}
 			}
 		}
-		
+
 		return $options;
 	}
 
@@ -68,7 +73,7 @@ class Report extends Model
 				$this->addError('options.startDate', 'Start date is required');
 			}
 		} else {
-			$this->addError('options.startDate', 'Start date is required');
+			//$this->addError('options.startDate', 'Start date is required');
 		}
 
 		if (isset($options['endDate'])) {
@@ -76,25 +81,27 @@ class Report extends Model
 				$this->addError('options.endDate', 'End date is required');
 			}
 		} else {
-			$this->addError('options.endDate', 'End date is required');
+			//$this->addError('options.endDate', 'End date is required');
 		}
 
 		if (isset($options['startDate']) && isset($options['endDate'])) {
 			if ($options['startDate'] > $options['endDate']) {
-				$this->addError('options.endDate', 'End date must be after the start date');
+				$this->addError(
+					'options.endDate',
+					'End date must be after the start date'
+				);
 			}
 		}
-
 	}
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
 			[['name', 'email', 'type'], 'required'],
 			['options', 'checkDates'],
-        ];
-    }
+		];
+	}
 }
