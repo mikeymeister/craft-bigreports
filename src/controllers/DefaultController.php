@@ -19,6 +19,7 @@ use Craft;
 use craft\web\Controller;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\UrlHelper;
+use craft\helpers\StringHelper;
 
 /**
  * @author    Kurious Agency
@@ -112,7 +113,7 @@ class DefaultController extends Controller
 		$report->name = $request->getParam('name');
 		$report->type = $request->getParam('type');
 		$report->options = $options;
-		$report->email = $request->getParam('email', $user->email);
+		$report->email = StringHelper::stripWhitespace($request->getParam('email', $user->email));
 
 		if (!BigReports::$plugin->service->saveReport($report)) {
 			Craft::$app->getSession()->setError(Craft::t('app', 'Couldn’t save report.'));
