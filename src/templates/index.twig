@@ -69,7 +69,7 @@
 						{% endif %}
 					</th>
 					<td data-title="{{ 'Type'|t }}"><code>{{ report.type }}</code></td>
-					<td data-title="{{ 'Email'|t }}"><code>{{ report.email }}</code></td>
+					<td data-title="{{ 'Email'|t }}" style="word-break:break-word"><code>{{ report.email }}</code></td>
 					<td data-title="{{ 'Exported'|t }}">
 						{{ report.dateExported is not null ? report.dateExported|date('d/m/Y G:i') : '' }}
 					</td>

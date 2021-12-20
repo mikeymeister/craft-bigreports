@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.5 - 2021-12-20
+
+### Fixed
+
+-   Fixed an issue where email address didn't word wrap on the index page
+
 ## 1.1.4 - 2020-11-23
 
 ### Changed
