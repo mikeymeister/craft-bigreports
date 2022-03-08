@@ -138,7 +138,7 @@ class BigReportsService extends Component
 
 		fclose($handle);
 
-		$csv = Writer::createFromPath(new \SplFileObject($tempFile, 'a+'), 'w');
+		$csv = Writer::createFromFileObject(new \SplFileObject($tempFile, 'a+'), 'w');
 
 		if ( isset($data['columns']) ) {
 			$csv->insertOne($data['columns']);

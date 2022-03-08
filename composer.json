@@ -23,7 +23,7 @@
 	],
 	"require": {
 		"craftcms/cms": "^3.3.0",
-		"league/csv": "^8.2",
+		"league/csv": "^8.2 || ^9.0",
 		"vova07/yii2-console-runner-extension": "^0.1.2"
 	},
 	"autoload": {
